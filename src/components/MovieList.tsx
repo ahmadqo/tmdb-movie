@@ -13,9 +13,10 @@ interface MovieListProps {
   label: string;
   id: string;
   dataList: Movie[];
+  blur: boolean;
 }
 
-const MovieList = ({ endpoint, label, id, dataList }: MovieListProps) => {
+const MovieList = ({ endpoint, label, id, dataList, blur }: MovieListProps) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   // const { status, error } = useSelector((state: RootState) => state.movies);
@@ -55,6 +56,7 @@ const MovieList = ({ endpoint, label, id, dataList }: MovieListProps) => {
               onClick={() => {
                 handleClick(movie?.id);
               }}
+              blur={blur}
             />
           ))}
         </div>

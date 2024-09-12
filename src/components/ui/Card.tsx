@@ -5,13 +5,16 @@ interface CardProps {
   image: string;
   release_date: string;
   onClick: () => void;
+  blur: boolean;
 }
 
-const Card = ({ title, image, release_date, onClick }: CardProps) => {
+const Card = ({ title, image, release_date, onClick, blur }: CardProps) => {
   return (
     <div
       onClick={onClick}
-      className="relative rounded-lg overflow-hidden shadow-lg w-full h-full cursor-pointer hover:border-orange-500 hover:border-2 transition duration-300"
+      className={`relative rounded-lg overflow-hidden shadow-lg w-full h-full cursor-pointer hover:border-orange-500 hover:border-2 transition-opacity duration-300 ${
+        blur ? "opacity-20" : "opacity-100"
+      }`}
     >
       <img
         src={`${SECURE_IMAGE_BASE_URL}/w220_and_h330_face/${image}`}

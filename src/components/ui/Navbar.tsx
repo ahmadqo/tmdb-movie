@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+interface Props {
+  onSearch?: (value: string) => void;
+}
 
-const Navbar = () => {
+const Navbar = ({ onSearch }: Props) => {
   const navbarRef = useRef<HTMLElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleSearchToggle = () => {
     setSearchOpen(!searchOpen);
@@ -32,6 +36,26 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && onSearch && inputValue.length > 0) {
+      onSearch(inputValue);
+      setInputValue("");
+      setSearchOpen(false);
+    }
+  };
+
+  const handleClickSearch = () => {
+    if (inputValue.length > 0 && onSearch) {
+      onSearch(inputValue);
+      setInputValue("");
+      setIsOpen(false);
+    }
+  };
+
   return (
     <nav
       ref={navbarRef}
@@ -52,9 +76,12 @@ const Navbar = () => {
               }`}
             >
               <input
-                type="text"
+                type="search"
                 placeholder="Search..."
                 className="bg-white text-black px-4 py-2 rounded-full w-full focus:outline-none text-sm"
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                value={inputValue}
               />
             </div>
             <button
@@ -131,8 +158,13 @@ const Navbar = () => {
               type="text"
               placeholder="Search..."
               className="bg-white text-black px-4 py-2 rounded-full w-full focus:outline-none text-sm"
+              onChange={handleChange}
+              value={inputValue}
             />
-            <button className="bg-orange-500 px-4 py-2 rounded-full text-white text-md font-medium">
+            <button
+              onClick={handleClickSearch}
+              className="bg-orange-500 px-4 py-2 rounded-full text-white text-md font-medium"
+            >
               Search
             </button>
           </div>

@@ -3,7 +3,7 @@ import { MoviesState } from "./types";
 import { tmdbApi } from "../../utils/api/tmdbApi";
 
 const initialState: MoviesState = {
-  allMovies: null,
+  searchMovies: null,
   nowPlaying: null,
   popular: null,
   topRated: null,
@@ -11,6 +11,8 @@ const initialState: MoviesState = {
   detail: null,
   status: "idle",
   error: null,
+  loadingUpComing: false,
+  loadingTrending: false,
 };
 
 export const fetchMovies = createAsyncThunk(
@@ -27,11 +29,19 @@ const moviesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMovies.pending, (state) => {
+      .addCase(fetchMovies.pending, (state, action) => {
         state.status = "loading";
+        if (action.meta.arg.includes("upcoming")) {
+          state.loadingUpComing = true;
+        }
+        if (action.meta.arg.includes("top_rated")) {
+          state.loadingTrending = true;
+        }
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.loadingUpComing = false;
+        state.loadingTrending = false;
         if (action.meta.arg.includes("popular")) {
           state.popular = action.payload;
         } else if (action.meta.arg.includes("now_playing")) {
@@ -40,6 +50,8 @@ const moviesSlice = createSlice({
           state.topRated = action.payload;
         } else if (action.meta.arg.includes("upcoming")) {
           state.upcoming = action.payload;
+        } else if (action.meta.arg.includes("search")) {
+          state.searchMovies = action.payload;
         } else {
           state.detail = action.payload;
         }
@@ -47,6 +59,8 @@ const moviesSlice = createSlice({
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Error";
+        state.loadingUpComing = false;
+        state.loadingTrending = false;
       });
   },
 });

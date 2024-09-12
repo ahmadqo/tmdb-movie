@@ -23,7 +23,7 @@ export interface MovieResponse {
 }
 
 export interface MoviesState {
-  allMovies: MovieResponse | null;
+  searchMovies: MovieResponse | null;
   nowPlaying: MovieResponse | null;
   popular: MovieResponse | null;
   topRated: MovieResponse | null;
@@ -31,4 +31,6 @@ export interface MoviesState {
   detail: Movie | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  loadingUpComing: boolean;
+  loadingTrending: boolean;
 }
