@@ -3,12 +3,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { SECURE_IMAGE_BASE_URL } from "../utils/constants";
 import { useEffect, useState } from "react";
 import { fetchMovies } from "../features/movies/moviesSlice";
-
-// interface HeroProps {
-//   title: string;
-//   overview: string;
-//   image: string;
-// }
+import Button from "./ui/Button";
 
 const Hero = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,7 +25,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative h-[900px] justify-center bg-cover bg-center px-8 xl:px-[160px] transition-all duration-300 ease-in-out"
+      className="relative h-[730px] justify-center bg-cover bg-center px-8 xl:px-[160px] transition-all duration-300 ease-in-out"
       style={{
         backgroundImage: `url('${SECURE_IMAGE_BASE_URL}/original${popular[currentIndex]?.backdrop_path}')`,
       }}
@@ -45,11 +40,30 @@ const Hero = () => {
             {popular[currentIndex]?.title}
           </h1>
         </div>
-        <div className="w-full md:w-4/5 z-10 leading-8 mt-10">
+        <div className="w-full md:w-4/5 lg:w-2/4 z-10 leading-8 mt-10">
           <div className="text-orange-500 text-lg font-bold ">Overview</div>
           <span className="text-white text-base transition-all duration-300 ease-in-out">
             {popular[currentIndex]?.overview}
           </span>
+          <div className="flex items-center gap-4 z-10 mt-4 text-white">
+            {popular[currentIndex]?.vote_average && (
+              <p>
+                Rating :{" "}
+                {Number(popular[currentIndex]?.vote_average).toFixed(1)}+
+              </p>
+            )}
+            {popular[currentIndex]?.vote_average &&
+              popular[currentIndex]?.vote_average && <span>|</span>}
+
+            {popular[currentIndex]?.vote_average && (
+              <p>
+                View : {Number(popular[currentIndex]?.popularity).toFixed(0)}
+              </p>
+            )}
+          </div>
+          <div className="flex mt-8">
+            <Button label="More Detail" onClick={() => {}} />
+          </div>
         </div>
       </div>
     </section>

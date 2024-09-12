@@ -2,7 +2,7 @@ import MovieCard from "./ui/Card";
 import Button from "./ui/Button";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { fetchMovies } from "../features/movies/moviesSlice";
 import { formatDate } from "../utils/helpers";
 
@@ -16,10 +16,12 @@ const MovieList = ({ endpoint, label, id }: MovieListProps) => {
   const dispatch: AppDispatch = useDispatch();
   const { status, error, popular, nowPlaying, topRated, upcoming, allMovies } =
     useSelector((state: RootState) => state.movies);
+  const [page, setpage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchMovies(endpoint));
-  }, [dispatch, endpoint]);
+    const query = `${endpoint}?page=${page}`;
+    dispatch(fetchMovies(query));
+  }, [dispatch, endpoint, page]);
 
   if (status === "loading") return <div>Loading</div>;
   if (status === "failed") return <p>{error}</p>;
@@ -58,11 +60,11 @@ const MovieList = ({ endpoint, label, id }: MovieListProps) => {
           ))}
         </div>
         <div className="flex justify-center items-center pt-10">
-          <Button label="Show More" />
+          <Button label="Show More" onClick={() => setpage(page + 1)} />
         </div>
       </div>
     </section>
   );
 };
 
-export default MovieList;
+export default memo(MovieList);

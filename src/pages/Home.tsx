@@ -1,10 +1,11 @@
+import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import MovieList from "../components/MovieList";
 import Navbar from "../components/ui/Navbar";
 
 const Home = () => {
   return (
-    <div className="relative">
+    <div className="relative bg-zinc-950">
       <Navbar />
       <Hero />
       <MovieList
@@ -12,11 +13,12 @@ const Home = () => {
         label="Trending Movies"
         id="trending"
       />
-      {/* <MovieList
-        endpoint="/movie/popular?language=en-US&page=1"
-        label="Popular"
-        id="popular"
-      /> */}
+      <MovieList
+        endpoint="/movie/upcoming"
+        label="Upcoming Releases"
+        id="upcoming"
+      />
+      <Footer />
     </div>
   );
 };

@@ -31,7 +31,6 @@ const moviesSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.warn("action", action);
         if (action.meta.arg.includes("popular")) {
           state.popular = action.payload;
         } else if (action.meta.arg.includes("now_playing")) {
