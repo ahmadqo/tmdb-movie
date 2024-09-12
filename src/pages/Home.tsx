@@ -38,32 +38,35 @@ const Home = () => {
     <div className="relative bg-zinc-950">
       <Navbar onSearch={handeSearch} />
       <Hero />
-      {isSearch ? (
+      <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-80 bg-neutral-950 rounded-3xl flex justify-between p-10">
+        <div className="text-white font-bold text-lg flex items-center gap-2">
+          asdasds
+        </div>
+      </div>
+      {isSearch && (
         <MovieList
-          endpoint="/movie/top_rated"
+          endpoint=""
           label="Search Movies"
           id="search"
           dataList={searchMovies?.results ?? []}
           blur={false}
+          moreDisplay={false}
         />
-      ) : (
-        <>
-          <MovieList
-            endpoint="/movie/top_rated"
-            label="Trending Movies"
-            id="trending"
-            dataList={topRated?.results ?? []}
-            blur={loadingTrending}
-          />
-          <MovieList
-            endpoint="/movie/upcoming"
-            label="Upcoming Releases"
-            id="upcoming"
-            dataList={upcoming?.results ?? []}
-            blur={loadingUpComing}
-          />
-        </>
       )}
+      <MovieList
+        endpoint="/movie/top_rated"
+        label="Trending Movies"
+        id="trending"
+        dataList={topRated?.results ?? []}
+        blur={loadingTrending}
+      />
+      <MovieList
+        endpoint="/movie/upcoming"
+        label="Upcoming Releases"
+        id="upcoming"
+        dataList={upcoming?.results ?? []}
+        blur={loadingUpComing}
+      />
 
       <Footer />
     </div>

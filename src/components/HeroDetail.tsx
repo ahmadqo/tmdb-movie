@@ -25,6 +25,10 @@ const HeroDetail = ({ bgImage, posterImage }: HeroProps) => {
           src={`${SECURE_IMAGE_BASE_URL}/original${bgImage}`}
           alt="banner"
           className="rounded-3xl max-h-[550px] w-fit z-10 xs-hidden sm:hidden md:block"
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = `${SECURE_IMAGE_BASE_URL}/original${posterImage}`;
+          }}
         />
         <img
           src={`${SECURE_IMAGE_BASE_URL}/original${posterImage}`}

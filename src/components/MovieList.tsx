@@ -7,6 +7,7 @@ import { fetchMovies } from "../features/movies/moviesSlice";
 import { formatDate } from "../utils/helpers";
 import { Movie } from "../features/movies/types";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./ui/Pagination";
 
 interface MovieListProps {
   endpoint: string;
@@ -14,21 +15,27 @@ interface MovieListProps {
   id: string;
   dataList: Movie[];
   blur: boolean;
+  moreDisplay?: boolean;
 }
 
-const MovieList = ({ endpoint, label, id, dataList, blur }: MovieListProps) => {
+const MovieList = ({
+  endpoint,
+  label,
+  id,
+  dataList,
+  blur,
+  moreDisplay = true,
+}: MovieListProps) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  // const { status, error } = useSelector((state: RootState) => state.movies);
   const [page, setpage] = useState(1);
 
   useEffect(() => {
-    const query = `${endpoint}?page=${page}`;
-    dispatch(fetchMovies(query));
+    if (endpoint !== "") {
+      const query = `${endpoint}?page=${page}`;
+      dispatch(fetchMovies(query));
+    }
   }, [dispatch, endpoint, page]);
-
-  // if (status === "loading") return <div>Loading</div>;
-  // if (status === "failed") return <p>{error}</p>;
 
   const handleClick = (id: number) => {
     navigate("/detail/" + id, {
@@ -57,11 +64,21 @@ const MovieList = ({ endpoint, label, id, dataList, blur }: MovieListProps) => {
                 handleClick(movie?.id);
               }}
               blur={blur}
+              vote_average={movie.vote_average}
             />
           ))}
         </div>
-        <div className="flex justify-center items-center pt-10">
-          <Button label="Show More" onClick={() => setpage(page + 1)} />
+        {/* {moreDisplay && (
+          <div className="flex justify-center items-center pt-10">
+            <Button label="Show More" onClick={() => setpage(page + 1)} />
+          </div>
+        )} */}
+        <div className="flex justify-center">
+          <Pagination
+            page={page}
+            totalPages={10}
+            onPageChange={(val) => setpage(val)}
+          />
         </div>
       </div>
     </section>

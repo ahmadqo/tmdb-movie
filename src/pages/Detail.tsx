@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { useEffect } from "react";
 import { fetchMovies } from "../features/movies/moviesSlice";
 import { formatDate, formattedRevenue } from "../utils/helpers";
+import Start from "../components/ui/Start";
 
 const Detail = () => {
   const { id } = useParams();
@@ -33,14 +34,7 @@ const Detail = () => {
       <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-80 bg-neutral-950 rounded-3xl flex justify-between p-10">
         <div className="text-white font-bold text-lg flex items-center gap-2">
           {Number(detail?.vote_average).toFixed(1)}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            className="w-5 h-5 text-orange-500"
-          >
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z" />
-          </svg>
+          <Start />
         </div>
         <div className="text-white font-bold text-lg flex items-center gap-2">
           <svg

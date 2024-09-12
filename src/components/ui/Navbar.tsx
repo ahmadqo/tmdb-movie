@@ -5,12 +5,17 @@ interface Props {
 
 const Navbar = ({ onSearch }: Props) => {
   const navbarRef = useRef<HTMLElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [searchOpen, setSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const handleSearchToggle = () => {
     setSearchOpen(!searchOpen);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   };
 
   useEffect(() => {
@@ -82,6 +87,7 @@ const Navbar = ({ onSearch }: Props) => {
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 value={inputValue}
+                ref={inputRef}
               />
             </div>
             <button
