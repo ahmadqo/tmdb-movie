@@ -3,11 +3,12 @@ import { MoviesState } from "./types";
 import { tmdbApi } from "../../utils/api/tmdbApi";
 
 const initialState: MoviesState = {
-  allMovies: [],
-  nowPlaying: [],
-  popular: [],
-  topRated: [],
-  upcoming: [],
+  allMovies: null,
+  nowPlaying: null,
+  popular: null,
+  topRated: null,
+  upcoming: null,
+  detail: null,
   status: "idle",
   error: null,
 };
@@ -16,7 +17,7 @@ export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async (endpoint: string) => {
     const { data } = await tmdbApi.get(endpoint);
-    return data?.results;
+    return data;
   }
 );
 
@@ -40,7 +41,7 @@ const moviesSlice = createSlice({
         } else if (action.meta.arg.includes("upcoming")) {
           state.upcoming = action.payload;
         } else {
-          state.allMovies = action.payload;
+          state.detail = action.payload;
         }
       })
       .addCase(fetchMovies.rejected, (state, action) => {

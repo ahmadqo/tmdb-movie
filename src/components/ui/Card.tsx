@@ -4,11 +4,15 @@ interface CardProps {
   title: string;
   image: string;
   release_date: string;
+  onClick: () => void;
 }
 
-const Card = ({ title, image, release_date }: CardProps) => {
+const Card = ({ title, image, release_date, onClick }: CardProps) => {
   return (
-    <div className="relative rounded-lg overflow-hidden shadow-lg w-full h-full cursor-pointer hover:border-orange-500 hover:border-2 transition duration-300">
+    <div
+      onClick={onClick}
+      className="relative rounded-lg overflow-hidden shadow-lg w-full h-full cursor-pointer hover:border-orange-500 hover:border-2 transition duration-300"
+    >
       <img
         src={`${SECURE_IMAGE_BASE_URL}/w220_and_h330_face/${image}`}
         alt={title}

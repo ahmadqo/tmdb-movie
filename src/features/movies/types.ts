@@ -12,14 +12,23 @@ export interface Movie {
   title: string;
   video: boolean;
   vote_average: number;
+  revenue: number;
+}
+
+export interface MovieResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface MoviesState {
-  allMovies: Movie[];
-  nowPlaying: Movie[];
-  popular: Movie[];
-  topRated: Movie[];
-  upcoming: Movie[];
+  allMovies: MovieResponse | null;
+  nowPlaying: MovieResponse | null;
+  popular: MovieResponse | null;
+  topRated: MovieResponse | null;
+  upcoming: MovieResponse | null;
+  detail: Movie | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }

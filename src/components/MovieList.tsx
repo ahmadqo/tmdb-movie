@@ -1,21 +1,24 @@
+import { memo, useEffect, useState } from "react";
 import MovieCard from "./ui/Card";
 import Button from "./ui/Button";
-import { AppDispatch, RootState } from "../store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { memo, useEffect, useState } from "react";
+import { AppDispatch } from "../store/store";
+import { useDispatch } from "react-redux";
 import { fetchMovies } from "../features/movies/moviesSlice";
 import { formatDate } from "../utils/helpers";
+import { Movie } from "../features/movies/types";
+import { useNavigate } from "react-router-dom";
 
 interface MovieListProps {
   endpoint: string;
   label: string;
   id: string;
+  dataList: Movie[];
 }
 
-const MovieList = ({ endpoint, label, id }: MovieListProps) => {
+const MovieList = ({ endpoint, label, id, dataList }: MovieListProps) => {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { status, error, popular, nowPlaying, topRated, upcoming, allMovies } =
-    useSelector((state: RootState) => state.movies);
+  // const { status, error } = useSelector((state: RootState) => state.movies);
   const [page, setpage] = useState(1);
 
   useEffect(() => {
@@ -23,21 +26,14 @@ const MovieList = ({ endpoint, label, id }: MovieListProps) => {
     dispatch(fetchMovies(query));
   }, [dispatch, endpoint, page]);
 
-  if (status === "loading") return <div>Loading</div>;
-  if (status === "failed") return <p>{error}</p>;
+  // if (status === "loading") return <div>Loading</div>;
+  // if (status === "failed") return <p>{error}</p>;
 
-  let dataList = [];
-  if (endpoint.includes("popular")) {
-    dataList = popular;
-  } else if (endpoint.includes("now_playing")) {
-    dataList = nowPlaying;
-  } else if (endpoint.includes("top_rated")) {
-    dataList = topRated;
-  } else if (endpoint.includes("upcoming")) {
-    dataList = upcoming;
-  } else {
-    dataList = allMovies;
-  }
+  const handleClick = (id: number) => {
+    navigate("/detail/" + id, {
+      replace: true,
+    });
+  };
 
   return (
     <section
@@ -56,6 +52,9 @@ const MovieList = ({ endpoint, label, id }: MovieListProps) => {
               title={movie.title}
               image={movie.poster_path}
               release_date={formatDate(movie.release_date)}
+              onClick={() => {
+                handleClick(movie?.id);
+              }}
             />
           ))}
         </div>

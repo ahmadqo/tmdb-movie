@@ -36,3 +36,15 @@
   background-color: rgb(249 115 22);
   border-radius: 10px;
 }
+
+@media (max-width: 480px) {
+  .xs-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .xs-hidden {
+    display: none;
+  }
+}

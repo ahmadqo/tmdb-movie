@@ -78,13 +78,13 @@ const Navbar = () => {
             </button>
           </div>
           <div className="space-x-10">
-            <a href="#home" className="hover:text-gray-300">
+            <a href="/#home" className="hover:text-gray-300">
               Home
             </a>
-            <a href="#trending" className="hover:text-gray-300">
+            <a href="/#trending" className="hover:text-gray-300">
               Trending Movies
             </a>
-            <a href="#upcoming" className="hover:text-gray-300">
+            <a href="/#upcoming" className="hover:text-gray-300">
               Upcoming Releases
             </a>
           </div>
