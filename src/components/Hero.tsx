@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../store/store";
 import { SECURE_IMAGE_BASE_URL } from "../utils/constants";
 import { useEffect, useState } from "react";
@@ -8,11 +8,11 @@ import Button from "./ui/Button";
 import { Movie } from "../features/movies/types";
 
 const Hero = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { popular } = useSelector((state: RootState) => state.movies);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [data, setData] = useState<Movie[]>([]); // Define a variable using Movie[]
+  const [data, setData] = useState<Movie[]>([]);
 
   useEffect(() => {
     dispatch(fetchMovies("/movie/popular?language=en-US&page=1"));
@@ -27,16 +27,16 @@ const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [data]);
 
-  const handleClick = () => {
-    navigate("/detail/" + data[currentIndex]?.id, {
-      replace: true,
-    });
-  };
+  // const handleClick = () => {
+  //   navigate("/detail/" + data[currentIndex]?.id, {
+  //     replace: true,
+  //   });
+  // };
 
   return (
     <section
@@ -75,7 +75,12 @@ const Hero = () => {
             )}
           </div>
           <div className="flex mt-8">
-            <Button label="More Detail" onClick={handleClick} />
+            <a href={`/detail/${data[currentIndex]?.id}`}>
+              <Button
+                label="More Detail"
+                // onClick={handleClick}
+              />
+            </a>
           </div>
         </div>
       </div>

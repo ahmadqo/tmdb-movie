@@ -26,7 +26,7 @@ const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
             className={`rounded-full text-sm  w-28 h-10 flex items-center justify-center text-white font-medium transition-all duration-300 ease-in-out ${
               page === 1
                 ? "pointer-events-none bg-zinc-950"
-                : "cursor-pointer bg-orange-500"
+                : "cursor-pointer bg-orange-500 hover:bg-orange-700"
             }`}
           >
             Previous
@@ -39,7 +39,7 @@ const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
             className={`rounded-full text-sm w-28 h-10 flex items-center justify-center text-white font-medium transition-all duration-300 ease-in-out ${
               page === totalPages
                 ? "pointer-events-none bg-zinc-950"
-                : "cursor-pointer bg-orange-500"
+                : "cursor-pointer bg-orange-500 hover:bg-orange-700"
             }`}
           >
             Next

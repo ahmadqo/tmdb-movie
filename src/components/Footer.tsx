@@ -37,7 +37,7 @@ const Footer = () => {
 
         <div>
           <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-          <p className="text-gray-400">Email: moviewqu@movie.com</p>
+          <p className="text-gray-400">Email: moviequ@movie.com</p>
         </div>
       </div>
       <div className="mt-8 text-center text-gray-500 text-sm">

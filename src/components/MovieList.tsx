@@ -1,12 +1,11 @@
 import { memo, useEffect, useState } from "react";
 import MovieCard from "./ui/Card";
-import Button from "./ui/Button";
 import { AppDispatch } from "../store/store";
 import { useDispatch } from "react-redux";
 import { fetchMovies } from "../features/movies/moviesSlice";
 import { formatDate } from "../utils/helpers";
 import { Movie } from "../features/movies/types";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Pagination from "./ui/Pagination";
 
 interface MovieListProps {
@@ -26,7 +25,7 @@ const MovieList = ({
   blur,
   moreDisplay = true,
 }: MovieListProps) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [page, setpage] = useState(1);
 
@@ -37,11 +36,11 @@ const MovieList = ({
     }
   }, [dispatch, endpoint, page]);
 
-  const handleClick = (id: number) => {
-    navigate("/detail/" + id, {
-      replace: true,
-    });
-  };
+  // const handleClick = (id: number) => {
+  //   navigate("/detail/" + id, {
+  //     replace: true,
+  //   });
+  // };
 
   return (
     <section
@@ -57,12 +56,13 @@ const MovieList = ({
           {(dataList ?? []).map((movie) => (
             <MovieCard
               key={movie.id}
+              id={movie.id}
               title={movie.title}
               image={movie.poster_path}
               release_date={formatDate(movie.release_date)}
-              onClick={() => {
-                handleClick(movie?.id);
-              }}
+              // onClick={() => {
+              //   handleClick(movie?.id);
+              // }}
               blur={blur}
               vote_average={movie.vote_average}
             />
@@ -73,13 +73,15 @@ const MovieList = ({
             <Button label="Show More" onClick={() => setpage(page + 1)} />
           </div>
         )} */}
-        <div className="flex justify-center">
-          <Pagination
-            page={page}
-            totalPages={10}
-            onPageChange={(val) => setpage(val)}
-          />
-        </div>
+        {moreDisplay && (
+          <div className="flex justify-center">
+            <Pagination
+              page={page}
+              totalPages={10}
+              onPageChange={(val) => setpage(val)}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

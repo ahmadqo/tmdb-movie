@@ -2,25 +2,28 @@ import { SECURE_IMAGE_BASE_URL } from "../../utils/constants";
 import Start from "./Start";
 
 interface CardProps {
+  id: number;
   title: string;
   image: string;
   release_date: string;
-  onClick: () => void;
+  // onClick?: () => void;
   blur: boolean;
   vote_average?: number;
 }
 
 const Card = ({
+  id,
   title,
   image,
   release_date,
-  onClick,
+  // onClick,
   blur,
   vote_average = 0,
 }: CardProps) => {
   return (
-    <div
-      onClick={onClick}
+    <a
+      // onClick={onClick}
+      href={`/detail/${id}`}
       className={`relative rounded-lg overflow-hidden shadow-lg w-full h-full cursor-pointer hover:border-orange-500 hover:border-2 transition-opacity duration-300 ${
         blur ? "opacity-20" : "opacity-100"
       }`}
@@ -46,7 +49,7 @@ const Card = ({
           )}
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 export default Card;
